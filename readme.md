@@ -11,7 +11,7 @@ Export your WhatsApp Web contacts, 1-on-1 chats and group members to **Google Co
 [English](#-english) • [Türkçe](#-türkçe)
 
 <p align="center">
-  <img src="docs/screenshot-popup.png" alt="WA Exporter popup: export WhatsApp contacts and group members to CSV and vCard" width="380">
+  <img src="docs/screenshot-popup-en.png" alt="WA Exporter popup: export WhatsApp contacts and group members to CSV and vCard" width="380">
 </p>
 
 ---
@@ -99,7 +99,8 @@ wa-exporter/
 │   ├── en/messages.json  # English UI texts (default)
 │   └── tr/messages.json  # Turkish UI texts
 ├── docs/
-│   └── screenshot-popup.png
+│   ├── screenshot-popup-en.png
+│   └── screenshot-popup-tr.png
 ├── icons/
 │   ├── icon16.png
 │   ├── icon32.png
@@ -136,6 +137,10 @@ WA Exporter, WhatsApp kişilerinizi, birebir sohbetlerinizi ve WhatsApp grup üy
 Saf JavaScript ile yazılmıştır; bağımlılık veya derleme adımı yoktur.
 
 > **Diller:** Arayüz, tarayıcınızın diline göre **Türkçe** veya **İngilizce** açılır (diğer dillerde İngilizce).
+
+<p align="center">
+  <img src="docs/screenshot-popup-tr.png" alt="WA Exporter Türkçe arayüz: WhatsApp kişilerini ve grup üyelerini CSV ve vCard olarak dışa aktarma" width="380">
+</p>
 
 ### 🌟 Özellikler
 
