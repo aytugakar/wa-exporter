@@ -1,0 +1,121 @@
+let dataStore = {
+  directChats: [],
+  savedContacts: [],
+  allDiscovered: [],
+  groups: []
+};
+
+const btnFetch = document.getElementById("btnFetch");
+const btnVCF = document.getElementById("btnVCF");
+const btnCSV = document.getElementById("btnCSV");
+const btnGroupMembers = document.getElementById("btnGroupMembers");
+
+const countChats = document.getElementById("countChats");
+const countSaved = document.getElementById("countSaved");
+const countAll = document.getElementById("countAll");
+const countGroups = document.getElementById("countGroups");
+const statusDiv = document.getElementById("status");
+
+function downloadFile(content, fileName, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function getSelectedScopeList() {
+  const selectedScope = document.querySelector('input[name="scope"]:checked').value;
+  return dataStore[selectedScope] || [];
+}
+
+// 1. Verileri Çek
+btnFetch.addEventListener("click", async () => {
+  statusDiv.innerText = "Taranıyor...";
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  if (!tab || !tab.url.includes("web.whatsapp.com")) {
+    statusDiv.innerText = "Lütfen WhatsApp Web sekmesini açın.";
+    return;
+  }
+
+  chrome.tabs.sendMessage(tab.id, { action: "EXTRACT_CONTACTS" }, (response) => {
+    if (chrome.runtime.lastError || !response || response.error) {
+      statusDiv.innerText = "Hata oluştu. Sayfayı yenileyip tekrar deneyin.";
+      return;
+    }
+
+    dataStore = {
+      directChats: response.data.directChats || [],
+      savedContacts: response.data.savedContacts || [],
+      allDiscovered: response.data.allDiscovered || [],
+      groups: response.data.groups || []
+    };
+
+    countChats.innerText = dataStore.directChats.length;
+    countSaved.innerText = dataStore.savedContacts.length;
+    countAll.innerText = dataStore.allDiscovered.length;
+    countGroups.innerText = dataStore.groups.length;
+
+    statusDiv.innerText = "Veriler hazır. Kapsam seçip indirin.";
+
+    btnVCF.disabled = false;
+    btnCSV.disabled = false;
+    if (dataStore.groups.length > 0) {
+      btnGroupMembers.disabled = false;
+    }
+  });
+});
+
+// 2. vCard (.vcf)
+btnVCF.addEventListener("click", () => {
+  const list = getSelectedScopeList();
+  if (list.length === 0) {
+    statusDiv.innerText = "Seçilen kapsamda kişi bulunamadı.";
+    return;
+  }
+
+  let vcf = "";
+  list.forEach(c => {
+    vcf += `BEGIN:VCARD\r\nVERSION:3.0\r\nFN:${c.name}\r\nTEL;TYPE=CELL:${c.phone}\r\nEND:VCARD\r\n`;
+  });
+
+  const scopeName = document.querySelector('input[name="scope"]:checked').value;
+  downloadFile(vcf, `wa_${scopeName}.vcf`, "text/vcard");
+});
+
+// 3. Google Contacts CSV
+btnCSV.addEventListener("click", () => {
+  const list = getSelectedScopeList();
+  if (list.length === 0) {
+    statusDiv.innerText = "Seçilen kapsamda kişi bulunamadı.";
+    return;
+  }
+
+  let csv = "\uFEFFName,Given Name,Family Name,Phone 1 - Type,Phone 1 - Value\r\n";
+  list.forEach(c => {
+    const cleanName = `"${c.name.replace(/"/g, '""')}"`;
+    csv += `${cleanName},${cleanName},,Mobile,${c.phone}\r\n`;
+  });
+
+  const scopeName = document.querySelector('input[name="scope"]:checked').value;
+  downloadFile(csv, `wa_${scopeName}_google.csv`, "text/csv;charset=utf-8;");
+});
+
+// 4. Grup Üyeleri CSV
+btnGroupMembers.addEventListener("click", () => {
+  if (dataStore.groups.length === 0) return;
+
+  let csv = "\uFEFFGrup Adı,Grup ID,Katılımcı İsmi,Telefon\r\n";
+  dataStore.groups.forEach(g => {
+    const groupName = `"${g.groupName.replace(/"/g, '""')}"`;
+    g.participants.forEach(p => {
+      const pName = `"${p.name.replace(/"/g, '""')}"`;
+      csv += `${groupName},${g.groupId},${pName},${p.phone}\r\n`;
+    });
+  });
+
+  downloadFile(csv, "wa_grup_katilimcilari.csv", "text/csv;charset=utf-8;");
+});
