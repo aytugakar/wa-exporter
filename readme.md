@@ -1,40 +1,72 @@
-# WA Contacts & Groups Extractor
+# WA Exporter – Export WhatsApp Web Contacts & Group Members to CSV / vCard
 
-Extract, filter, and export WhatsApp Web contacts, 1-on-1 chats, and group participants seamlessly.
+Export your WhatsApp Web contacts, 1-on-1 chats and group members to **Google Contacts CSV**, **Excel-ready CSV** and **vCard (.vcf)** — right in your browser, with no servers and no sign-up.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)](https://github.com/aytugakar/wa-exporter/releases)
+[![Version](https://img.shields.io/badge/version-1.2-blue.svg)](manifest.json)
 [![Manifest](https://img.shields.io/badge/manifest-v3-green.svg)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Issues](https://img.shields.io/github/issues/aytugakar/wa-exporter)](https://github.com/aytugakar/wa-exporter/issues)
 [![Discussions](https://img.shields.io/github/discussions/aytugakar/wa-exporter)](https://github.com/aytugakar/wa-exporter/discussions)
 
 [English](#-english) • [Türkçe](#-türkçe)
 
+<!-- SCREENSHOT: Eklenti popup'ının ekran görüntüsünü docs/screenshot-popup.png olarak ekleyip alttaki satırın yorumunu kaldırın. -->
+<!-- ![WA Exporter popup: export WhatsApp contacts and group members to CSV and vCard](docs/screenshot-popup.png) -->
+
 ---
 
 ## 🌐 English
 
-A lightweight, privacy-focused Chrome Extension (Manifest V3) that extracts your WhatsApp Web contacts, 1-on-1 chats, and group members directly from memory/local storage without requiring external servers or credentials. Export in formats ready for Google Contacts and mobile devices.
+WA Exporter is a lightweight, privacy-focused Chrome extension (Manifest V3) that exports WhatsApp contacts, 1-on-1 chats and WhatsApp group members from WhatsApp Web. It reads the data WhatsApp Web already holds in your browser (its in-memory store, with IndexedDB as a fallback), so nothing is sent anywhere. Files can be imported into Google Contacts, phone address books, or opened in Excel / Google Sheets.
 
-### 🚀 Tech Stack
+Built with vanilla JavaScript — no dependencies, no build step.
 
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Chrome Extensions](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+> **Note:** The extension's interface is currently in **Turkish**. Button names are given below with their English meaning.
 
 ### ✨ Key Features
 
-- **Categorized Extraction:**
-  - **1-on-1 Direct Chats Only:** Filters out random group participants with whom you have no direct chat history.
-  - **Saved Address Book:** Extracts only users saved with an actual display name.
-  - **All Discovered Contacts:** Combines both active chats and cached participants.
-  - **Group Breakdown:** Catalogs groups and lists all their participant phone numbers and push names.
-- **Multiple Export Formats:**
-  - **vCard (.vcf):** Directly importable into iOS, Android, and macOS Address Book.
-  - **Google Contacts CSV:** Pre-formatted with matching headers (`Name`, `Given Name`, `Phone 1 - Type`, `Phone 1 - Value`).
-  - **Group CSV:** Tabulates `Group Name`, `Group ID`, `Participant Name`, and `Phone`.
-- **Privacy-First Architecture:** 100% client-side execution. No telemetry, third-party trackers, or external network requests.
+- **Export scopes:**
+  - **Direct chats only** (*Sadece Sohbetler*): people you have a 1-on-1 chat with; group members you never messaged are left out.
+  - **Saved contacts** (*Kayıtlı Rehberim*): only contacts saved with a name in your address book.
+  - **All known contacts** (*Gruplar Dahil Tümü*): every phone number WhatsApp Web knows as a contact, including unsaved people from your groups.
+  - **Group members** (*Grup Üyelerini İndir*): every group with its participants' names and phone numbers.
+- **Export formats:**
+  - **vCard (.vcf):** import into iPhone, Android, macOS Contacts or Google Contacts.
+  - **Google Contacts CSV:** uses Google's import headers (`Name`, `Given Name`, `Family Name`, `Phone 1 - Type`, `Phone 1 - Value`). Also opens in Excel.
+  - **Group members CSV:** one row per participant, with Turkish column headers `Grup Adı` (group name), `Grup ID` (group ID), `Katılımcı İsmi` (participant name), `Telefon` (phone).
+- **Privacy-first:** runs 100% in your browser. The only permission requested is `activeTab`; there is no telemetry and no network request of any kind.
+
+### 📋 Requirements
+
+- Google Chrome or another Chromium-based browser (Edge, Brave, Opera…)
+- A WhatsApp account signed in on [WhatsApp Web](https://web.whatsapp.com)
+
+### 📥 Installation & Usage
+
+1. **Download the code:**
+   ```bash
+   git clone https://github.com/aytugakar/wa-exporter.git
+   ```
+   Or use **Code → Download ZIP** on GitHub and unzip it.
+2. **Load into Chrome:**
+   - Go to `chrome://extensions/`.
+   - Turn on **Developer mode** (top right).
+   - Click **Load unpacked** and select the `wa-exporter` folder.
+3. **Export:**
+   - Open [WhatsApp Web](https://web.whatsapp.com), sign in and wait until your chat list has fully loaded.
+   - Click the extension icon in the toolbar.
+   - Click **Verileri Çek / Yenile** (Fetch / Refresh). The counts appear next to each scope.
+   - Choose a scope, then click **vCard (.vcf) İndir** (download vCard) or **Google Kişiler (CSV) İndir** (download Google Contacts CSV).
+   - For group members, click **Grup Üyelerini İndir (CSV)** (download group members).
+4. **Import into Google Contacts:**
+   - Open [Google Contacts](https://contacts.google.com).
+   - Click **Import** in the left menu and upload the CSV or VCF file.
+
+### 🛠️ Troubleshooting
+
+- **"Hata oluştu. Sayfayı yenileyip tekrar deneyin."** (An error occurred): reload the WhatsApp Web tab, wait for the chats to load, and try again. Also reload the tab after installing or updating the extension.
+- **Counts are low or a group has no members:** WhatsApp Web loads data gradually. Scroll through your chats or open the group once, then click **Verileri Çek / Yenile** again.
+- **It stopped working after a WhatsApp update:** the extension relies on WhatsApp Web's internal structure, which can change without notice. Please [open an issue](https://github.com/aytugakar/wa-exporter/issues).
 
 ### 🏗️ Architecture
 
@@ -43,38 +75,20 @@ A lightweight, privacy-focused Chrome Extension (Manifest V3) that extracts your
 │                      WhatsApp Web                      │
 │      [Webpack Store / ChatCollection / IndexedDB]      │
 └───────────────────────────┬────────────────────────────┘
-                            │ Injected Execution
+                            │ injected into the page
                             ▼
-                  [page-script.js]
-             (Resolves & Filters Models)
+                    [page-script.js]
+           (reads chats, contacts and groups)
                             │ window.postMessage
                             ▼
-                    [content.js]
-               (Runtime Bridge Layer)
-                            │ chrome.tabs.sendMessage
-                            ▼
-              [popup.js] ──► [popup.html]
-         (Format Converters: vCard / CSV)
+                     [content.js]
+                (bridge to the extension)
+                            ▲  │
+     chrome.tabs.sendMessage│  │sendResponse
+                            │  ▼
+              [popup.html + popup.js]
+       (UI, vCard / CSV builders, file download)
 ```
-
-### 📥 Installation & Usage
-
-1. **Clone or Download:**
-   ```bash
-   git clone [https://github.com/aytugakar/wa-exporter.git](https://github.com/aytugakar/wa-exporter.git)
-   ```
-2. **Load into Chrome:**
-   - Navigate to `chrome://extensions/` in your browser.
-   - Enable **Developer mode** (top-right toggle).
-   - Click **Load unpacked** and select the extension folder.
-3. **Run Extraction:**
-   - Open and log in to [WhatsApp Web](https://web.whatsapp.com).
-   - Click the extension icon in the toolbar.
-   - Click **Verileri Çek / Yenile** (Fetch/Refresh).
-   - Select your export scope and click **vCard (.vcf)** or **Google Kişiler (CSV)**.
-4. **Import to Google Contacts:**
-   - Go to [Google Contacts](https://contacts.google.com).
-   - Click **Import** on the sidebar and upload the generated CSV or VCF file.
 
 ### 📂 File Structure
 
@@ -85,72 +99,93 @@ wa-exporter/
 │   ├── icon32.png
 │   ├── icon48.png
 │   └── icon128.png
-├── manifest.json       # Manifest V3 configurations & permissions
-├── popup.html          # Extension UI
-├── popup.js            # UI handler and export engines (vCard/CSV)
-├── content.js          # Isolated context bridge
-├── page-script.js      # Main WhatsApp DOM/Store parser
-└── README.md
+├── manifest.json       # Manifest V3 configuration & permissions
+├── popup.html          # Extension popup UI
+├── popup.js            # UI logic and vCard / CSV export
+├── content.js          # Bridge between the page and the popup
+├── page-script.js      # Reads WhatsApp Web's internal store / IndexedDB
+├── LICENSE
+└── readme.md
 ```
+
+### ⚠️ Disclaimer
+
+- This project is **not affiliated with, endorsed or sponsored by WhatsApp or Meta**. "WhatsApp" is a trademark of its respective owner.
+- It uses WhatsApp Web's internal, undocumented structures and may break at any time.
+- Exported files contain other people's phone numbers. You are responsible for handling them in line with applicable data-protection laws (e.g. GDPR, KVKK) and WhatsApp's Terms of Service.
 
 ### 🤝 Community & Support
 
-- 🐛 **Found a bug?** Open an [Issue](https://github.com/aytugakar/wa-exporter/issues).
-- 💡 **Feature idea?** Submit a [Feature Request](https://github.com/aytugakar/wa-exporter/issues/new?template=feature_request.md).
-- 💬 **Questions or discussions?** Join our [Discussions](https://github.com/aytugakar/wa-exporter/discussions).
-- 🔀 **Contributions:** Pull Requests are welcome!
+- 🐛 **Found a bug?** Open an [issue](https://github.com/aytugakar/wa-exporter/issues).
+- 💡 **Feature idea?** [Open an issue](https://github.com/aytugakar/wa-exporter/issues/new) describing it.
+- 💬 **Questions?** Join the [Discussions](https://github.com/aytugakar/wa-exporter/discussions).
+- 🔀 **Contributions:** pull requests are welcome!
 
 ---
 
 ## 🇹🇷 Türkçe
 
-WhatsApp Web üzerinden kişilerinizi, doğrudan mesajlaştığınız sohbetleri ve grup üyelerini dış sunuculara veya harici API'lara ihtiyaç duymadan, yerel bellek üzerinden ayıklayan ve dışa aktaran açık kaynaklı bir Chrome Eklentisidir (Manifest V3).
+WA Exporter, WhatsApp kişilerinizi, birebir sohbetlerinizi ve WhatsApp grup üyelerini WhatsApp Web üzerinden dışa aktaran, hafif ve gizlilik odaklı bir Chrome eklentisidir (Manifest V3). WhatsApp Web'in tarayıcınızda zaten tuttuğu verileri okur (bellekteki veri deposu, gerekirse IndexedDB); hiçbir veri dışarı gönderilmez. Oluşan dosyaları Google Kişiler'e veya telefon rehberinize aktarabilir, Excel ya da Google E-Tablolar'da açabilirsiniz.
 
-### 🛠️ Teknolojiler
-
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Chrome Extensions](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+Saf JavaScript ile yazılmıştır; bağımlılık veya derleme adımı yoktur.
 
 ### 🌟 Özellikler
 
-- **Gelişmiş Filtreleme:**
-  - **Sadece Sohbetler:** Ortak gruplarda bulunup hiç mesajlaşmadığınız yabancı numaraları eler, yalnızca birebir sohbet geçmişiniz olanları listeler.
-  - **Kayıtlı Rehberim:** Yalnızca isim verilerek kaydedilmiş kişileri filtreler.
-  - **Gruplar Dahil Tümü:** Aktif sohbetler ve gruplardan yakalanan tüm benzersiz numaraları toplar.
-  - **Grup Üyeleri:** Tüm grupları ve katılımcı listelerini grup bazlı olarak dışa aktarır.
-- **Dışa Aktarma Formatları:**
-  - **vCard (.vcf):** iOS, Android, macOS ve Outlook rehberlerine doğrudan çift tıklayarak aktarılabilir.
-  - **Google Kişiler (CSV):** Google Contacts içe aktarma standartlarına tam uyumlu sütun başlıkları (`Name`, `Given Name`, `Phone 1 - Type`, `Phone 1 - Value`).
-  - **Grup Katılımcıları (CSV):** Grup adı, Grup ID'si, Katılımcı adı ve telefon sütunlarıyla tam döküm.
-- **Gizlilik Odaklı:** Bütün işlemler tarayıcınızın belleğinde gerçekleşir. Hiçbir veri kaydedilmez, harici sunucuya iletilmez.
+- **Dışa aktarma kapsamları:**
+  - **Sadece Sohbetler:** Birebir sohbetiniz olan kişiler. Ortak gruplarda bulunup hiç mesajlaşmadığınız numaralar dahil edilmez.
+  - **Kayıtlı Rehberim:** Yalnızca rehberinizde isimle kayıtlı kişiler.
+  - **Gruplar Dahil Tümü:** WhatsApp Web'in kişi olarak tanıdığı bütün numaralar; gruplardaki kayıtsız kişiler de dahil.
+  - **Grup Üyeleri:** Tüm gruplar, katılımcılarının isim ve telefonlarıyla birlikte.
+- **Dışa aktarma formatları:**
+  - **vCard (.vcf):** iPhone, Android, macOS Kişiler veya Google Kişiler'e aktarılabilir.
+  - **Google Kişiler (CSV):** Google'ın içe aktarma başlıklarını kullanır (`Name`, `Given Name`, `Family Name`, `Phone 1 - Type`, `Phone 1 - Value`). Excel'de de açılır.
+  - **Grup Katılımcıları (CSV):** Her katılımcı bir satır; sütunlar `Grup Adı`, `Grup ID`, `Katılımcı İsmi`, `Telefon`.
+- **Gizlilik odaklı:** Tüm işlemler tarayıcınızda yapılır. Eklenti yalnızca `activeTab` izni ister; hiçbir veri kaydedilmez, dışarıya hiçbir ağ isteği gönderilmez.
+
+### 📋 Gereksinimler
+
+- Google Chrome veya Chromium tabanlı bir tarayıcı (Edge, Brave, Opera…)
+- [WhatsApp Web](https://web.whatsapp.com)'de oturum açılmış bir WhatsApp hesabı
 
 ### 📥 Kurulum ve Kullanım
 
-1. **Projeyi İndirin:**
+1. **Projeyi indirin:**
    ```bash
-   git clone [https://github.com/aytugakar/wa-exporter.git](https://github.com/aytugakar/wa-exporter.git)
+   git clone https://github.com/aytugakar/wa-exporter.git
    ```
-2. **Chrome'a Ekleyin:**
-   - Tarayıcınızda `chrome://extensions/` adresine gidin.
+   Ya da GitHub'da **Code → Download ZIP** ile indirip arşivi açın.
+2. **Chrome'a ekleyin:**
+   - `chrome://extensions/` adresine gidin.
    - Sağ üstteki **Geliştirici modu** anahtarını açın.
-   - **Paketlenmemiş öge yükle** butonuna basarak proje klasörünü seçin.
-3. **Çalıştırma:**
-   - [web.whatsapp.com](https://web.whatsapp.com) adresine gidin ve oturum açın.
+   - **Paketlenmemiş öğe yükle** butonuna basıp `wa-exporter` klasörünü seçin.
+3. **Dışa aktarın:**
+   - [WhatsApp Web](https://web.whatsapp.com)'de oturum açın ve sohbet listeniz tamamen yüklenene kadar bekleyin.
    - Araç çubuğundaki eklenti simgesine tıklayın.
-   - **Verileri Çek / Yenile** butonuna basın.
-   - İhtiyacınız olan kapsamı seçip **vCard (.vcf)** veya **Google Kişiler (CSV)** butonuna tıklayın.
-4. **Google Kişiler'e Aktarma:**
-   - [Google Contacts](https://contacts.google.com) adresine gidin.
-   - Sol menüden **İçe aktar** seçeneğine tıklayıp indirdiğiniz CSV veya VCF dosyasını yükleyin.
+   - **Verileri Çek / Yenile** butonuna basın; her kapsamın yanında kişi sayısı görünür.
+   - Bir kapsam seçip **vCard (.vcf) İndir** veya **Google Kişiler (CSV) İndir** butonuna tıklayın.
+   - Grup üyeleri için **Grup Üyelerini İndir (CSV)** butonunu kullanın.
+4. **Google Kişiler'e aktarın:**
+   - [Google Kişiler](https://contacts.google.com) adresine gidin.
+   - Sol menüden **İçe aktar**'a tıklayıp CSV veya VCF dosyasını yükleyin.
+
+### 🛠️ Sorun Giderme
+
+- **"Hata oluştu. Sayfayı yenileyip tekrar deneyin.":** WhatsApp Web sekmesini yenileyin, sohbetlerin yüklenmesini bekleyip tekrar deneyin. Eklentiyi kurduktan veya güncelledikten sonra da sekmeyi yenileyin.
+- **Sayılar düşük ya da bir grubun üyeleri boş:** WhatsApp Web verileri parça parça yükler. Sohbet listesini aşağı kaydırın veya grubu bir kez açın, sonra **Verileri Çek / Yenile**'ye yeniden basın.
+- **Bir WhatsApp güncellemesinden sonra çalışmıyor:** Eklenti WhatsApp Web'in iç yapısını kullanır ve bu yapı haber verilmeden değişebilir. Lütfen bir [hata kaydı (issue)](https://github.com/aytugakar/wa-exporter/issues) açın.
+
+### ⚠️ Sorumluluk Reddi
+
+- Bu proje **WhatsApp veya Meta ile bağlantılı değildir**, onlar tarafından onaylanmamış ya da desteklenmemektedir. "WhatsApp" ilgili sahibinin ticari markasıdır.
+- Eklenti WhatsApp Web'in belgelenmemiş iç yapılarını kullanır ve her an çalışmayı durdurabilir.
+- Dışa aktarılan dosyalar başkalarının telefon numaralarını içerir. Bu verileri KVKK, GDPR gibi veri koruma mevzuatına ve WhatsApp Kullanım Koşulları'na uygun şekilde kullanmak sizin sorumluluğunuzdadır.
 
 ### 💬 Katkı ve İletişim
 
-- 🐛 Bir sorunla mı karşılaştınız? [Hata Bildirin (Issue)](https://github.com/aytugakar/wa-exporter/issues).
-- 💡 Yeni bir özellik mi öneriyorsunuz? [İstek Açın](https://github.com/aytugakar/wa-exporter/issues/new).
-- 💬 Toplulukla tartışmak için: [Discussions](https://github.com/aytugakar/wa-exporter/discussions).
-- 🛠️ Katkıda bulunmak için Pull Request gönderebilirsiniz.
+- 🐛 Bir sorunla mı karşılaştınız? [Hata bildirin (issue)](https://github.com/aytugakar/wa-exporter/issues).
+- 💡 Yeni bir özellik mi öneriyorsunuz? [İstek açın](https://github.com/aytugakar/wa-exporter/issues/new).
+- 💬 Soru ve tartışmalar için: [Discussions](https://github.com/aytugakar/wa-exporter/discussions).
+- 🛠️ Katkıda bulunmak için pull request gönderebilirsiniz.
 
 ---
 
@@ -158,12 +193,12 @@ WhatsApp Web üzerinden kişilerinizi, doğrudan mesajlaştığınız sohbetleri
 
 **A. Halil AKAR**
 - ✉️ Email: [aytugakar@gmail.com](mailto:aytugakar@gmail.com)
-- 🐙 GitHub: [@ahalilakar](https://github.com/ahalilakar)
+- 🐙 GitHub: [@aytugakar](https://github.com/aytugakar)
 - 💼 LinkedIn: [ahalilakar](https://www.linkedin.com/in/ahalilakar)
 
 ---
 
 ## 📄 License / Lisans
 
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 Bu proje [MIT Lisansı](LICENSE) kapsamında lisanslanmıştır.
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
