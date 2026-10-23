@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <style>
@@ -86,38 +86,38 @@
   </style>
 </head>
 <body>
-  <h3>WA Contacts Extractor</h3>
+  <h3 data-i18n="popupTitle">WA Exporter</h3>
 
-  <button id="btnFetch" class="primary">Verileri Çek / Yenile</button>
+  <button id="btnFetch" class="primary" data-i18n="btnFetch"></button>
 
   <fieldset>
-    <legend>1. Kapsam Seçimi</legend>
+    <legend data-i18n="legendScope"></legend>
     <label class="radio-label">
       <input type="radio" name="scope" value="directChats" checked>
-      Sadece Sohbetler (<span id="countChats" class="badge">0</span>)
+      <span data-i18n="scopeDirectChats"></span> (<span id="countChats" class="badge">0</span>)
     </label>
     <label class="radio-label">
       <input type="radio" name="scope" value="savedContacts">
-      Kayıtlı Rehberim (<span id="countSaved" class="badge">0</span>)
+      <span data-i18n="scopeSavedContacts"></span> (<span id="countSaved" class="badge">0</span>)
     </label>
     <label class="radio-label">
       <input type="radio" name="scope" value="allDiscovered">
-      Gruplar Dahil Tümü (<span id="countAll" class="badge">0</span>)
+      <span data-i18n="scopeAllDiscovered"></span> (<span id="countAll" class="badge">0</span>)
     </label>
   </fieldset>
 
   <fieldset>
-    <legend>2. Dışa Aktar</legend>
-    <button id="btnVCF" class="secondary" disabled>vCard (.vcf) İndir</button>
-    <button id="btnCSV" class="secondary" disabled>Google Kişiler (CSV) İndir</button>
+    <legend data-i18n="legendExport"></legend>
+    <button id="btnVCF" class="secondary" data-i18n="btnVCF" disabled></button>
+    <button id="btnCSV" class="secondary" data-i18n="btnCSV" disabled></button>
   </fieldset>
 
   <fieldset>
-    <legend>Gruplar (<span id="countGroups" class="badge">0</span>)</legend>
-    <button id="btnGroupMembers" class="secondary" disabled>Grup Üyelerini İndir (CSV)</button>
+    <legend><span data-i18n="legendGroups"></span> (<span id="countGroups" class="badge">0</span>)</legend>
+    <button id="btnGroupMembers" class="secondary" data-i18n="btnGroupMembers" disabled></button>
   </fieldset>
 
-  <div id="status">WhatsApp Web sekmesinde çalıştırın.</div>
+  <div id="status" data-i18n="statusInitial"></div>
   <script src="popup.js"></script>
 </body>
 </html>

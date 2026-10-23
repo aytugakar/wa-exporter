@@ -10,8 +10,9 @@ Export your WhatsApp Web contacts, 1-on-1 chats and group members to **Google Co
 
 [English](#-english) • [Türkçe](#-türkçe)
 
-<!-- SCREENSHOT: Eklenti popup'ının ekran görüntüsünü docs/screenshot-popup.png olarak ekleyip alttaki satırın yorumunu kaldırın. -->
-<!-- ![WA Exporter popup: export WhatsApp contacts and group members to CSV and vCard](docs/screenshot-popup.png) -->
+<p align="center">
+  <img src="docs/screenshot-popup.png" alt="WA Exporter popup: export WhatsApp contacts and group members to CSV and vCard" width="380">
+</p>
 
 ---
 
@@ -21,19 +22,19 @@ WA Exporter is a lightweight, privacy-focused Chrome extension (Manifest V3) tha
 
 Built with vanilla JavaScript — no dependencies, no build step.
 
-> **Note:** The extension's interface is currently in **Turkish**. Button names are given below with their English meaning.
+> **Languages:** the interface opens in **English** or **Turkish**, following your browser's language (English for every other language).
 
 ### ✨ Key Features
 
 - **Export scopes:**
-  - **Direct chats only** (*Sadece Sohbetler*): people you have a 1-on-1 chat with; group members you never messaged are left out.
-  - **Saved contacts** (*Kayıtlı Rehberim*): only contacts saved with a name in your address book.
-  - **All known contacts** (*Gruplar Dahil Tümü*): every phone number WhatsApp Web knows as a contact, including unsaved people from your groups.
-  - **Group members** (*Grup Üyelerini İndir*): every group with its participants' names and phone numbers.
+  - **Direct Chats Only:** people you have a 1-on-1 chat with; group members you never messaged are left out.
+  - **Saved Contacts:** only contacts saved with a name in your address book.
+  - **All, Including Groups:** every phone number WhatsApp Web knows as a contact, including unsaved people from your groups.
+  - **Group Members:** every group with its participants' names and phone numbers.
 - **Export formats:**
   - **vCard (.vcf):** import into iPhone, Android, macOS Contacts or Google Contacts.
   - **Google Contacts CSV:** uses Google's import headers (`Name`, `Given Name`, `Family Name`, `Phone 1 - Type`, `Phone 1 - Value`). Also opens in Excel.
-  - **Group members CSV:** one row per participant, with Turkish column headers `Grup Adı` (group name), `Grup ID` (group ID), `Katılımcı İsmi` (participant name), `Telefon` (phone).
+  - **Group members CSV:** one row per participant, with `Group Name`, `Group ID`, `Participant Name` and `Phone` columns (column names follow the interface language).
 - **Privacy-first:** runs 100% in your browser. The only permission requested is `activeTab`; there is no telemetry and no network request of any kind.
 
 ### 📋 Requirements
@@ -55,17 +56,17 @@ Built with vanilla JavaScript — no dependencies, no build step.
 3. **Export:**
    - Open [WhatsApp Web](https://web.whatsapp.com), sign in and wait until your chat list has fully loaded.
    - Click the extension icon in the toolbar.
-   - Click **Verileri Çek / Yenile** (Fetch / Refresh). The counts appear next to each scope.
-   - Choose a scope, then click **vCard (.vcf) İndir** (download vCard) or **Google Kişiler (CSV) İndir** (download Google Contacts CSV).
-   - For group members, click **Grup Üyelerini İndir (CSV)** (download group members).
+   - Click **Fetch / Refresh Data**. The counts appear next to each scope.
+   - Choose a scope, then click **Download vCard (.vcf)** or **Download Google Contacts (CSV)**.
+   - For group members, click **Download Group Members (CSV)**.
 4. **Import into Google Contacts:**
    - Open [Google Contacts](https://contacts.google.com).
    - Click **Import** in the left menu and upload the CSV or VCF file.
 
 ### 🛠️ Troubleshooting
 
-- **"Hata oluştu. Sayfayı yenileyip tekrar deneyin."** (An error occurred): reload the WhatsApp Web tab, wait for the chats to load, and try again. Also reload the tab after installing or updating the extension.
-- **Counts are low or a group has no members:** WhatsApp Web loads data gradually. Scroll through your chats or open the group once, then click **Verileri Çek / Yenile** again.
+- **"An error occurred. Reload the page and try again.":** reload the WhatsApp Web tab, wait for the chats to load, and try again. Also reload the tab after installing or updating the extension.
+- **Counts are low or a group has no members:** WhatsApp Web loads data gradually. Scroll through your chats or open the group once, then click **Fetch / Refresh Data** again.
 - **It stopped working after a WhatsApp update:** the extension relies on WhatsApp Web's internal structure, which can change without notice. Please [open an issue](https://github.com/aytugakar/wa-exporter/issues).
 
 ### 🏗️ Architecture
@@ -94,6 +95,11 @@ Built with vanilla JavaScript — no dependencies, no build step.
 
 ```text
 wa-exporter/
+├── _locales/
+│   ├── en/messages.json  # English UI texts (default)
+│   └── tr/messages.json  # Turkish UI texts
+├── docs/
+│   └── screenshot-popup.png
 ├── icons/
 │   ├── icon16.png
 │   ├── icon32.png
@@ -129,6 +135,8 @@ WA Exporter, WhatsApp kişilerinizi, birebir sohbetlerinizi ve WhatsApp grup üy
 
 Saf JavaScript ile yazılmıştır; bağımlılık veya derleme adımı yoktur.
 
+> **Diller:** Arayüz, tarayıcınızın diline göre **Türkçe** veya **İngilizce** açılır (diğer dillerde İngilizce).
+
 ### 🌟 Özellikler
 
 - **Dışa aktarma kapsamları:**
@@ -139,7 +147,7 @@ Saf JavaScript ile yazılmıştır; bağımlılık veya derleme adımı yoktur.
 - **Dışa aktarma formatları:**
   - **vCard (.vcf):** iPhone, Android, macOS Kişiler veya Google Kişiler'e aktarılabilir.
   - **Google Kişiler (CSV):** Google'ın içe aktarma başlıklarını kullanır (`Name`, `Given Name`, `Family Name`, `Phone 1 - Type`, `Phone 1 - Value`). Excel'de de açılır.
-  - **Grup Katılımcıları (CSV):** Her katılımcı bir satır; sütunlar `Grup Adı`, `Grup ID`, `Katılımcı İsmi`, `Telefon`.
+  - **Grup Katılımcıları (CSV):** Her katılımcı bir satır; sütunlar `Grup Adı`, `Grup ID`, `Katılımcı İsmi`, `Telefon` (sütun adları arayüz diline göre değişir).
 - **Gizlilik odaklı:** Tüm işlemler tarayıcınızda yapılır. Eklenti yalnızca `activeTab` izni ister; hiçbir veri kaydedilmez, dışarıya hiçbir ağ isteği gönderilmez.
 
 ### 📋 Gereksinimler

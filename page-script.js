@@ -141,7 +141,7 @@
         // GRUP SOHBETLERİ
         if (isGroup) {
           const rawId = chat.id?._serialized || String(chat.id || "");
-          const groupTitle = chat.name || chat.formattedTitle || "İsimsiz Grup";
+          const groupTitle = chat.name || chat.formattedTitle || "";
           const participants = [];
 
           const rawParts = chat.groupMetadata?.participants?.models ||
@@ -205,7 +205,7 @@
         if (rawId.includes("@g.us")) {
           groupsMap.set(rawId, {
             groupId: rawId,
-            groupName: chat.name || chat.formattedTitle || "İsimsiz Grup",
+            groupName: chat.name || chat.formattedTitle || "",
             participants: (chat.participants || []).map(p => {
               const pPhone = formatPhone(p.id || p);
               return { phone: pPhone, name: p.name || pPhone };

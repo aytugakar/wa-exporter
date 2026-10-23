@@ -16,6 +16,14 @@ const countAll = document.getElementById("countAll");
 const countGroups = document.getElementById("countGroups");
 const statusDiv = document.getElementById("status");
 
+// Metinler _locales/<dil>/messages.json'dan gelir; Chrome tarayıcı diline göre seçer.
+const t = (key) => chrome.i18n.getMessage(key);
+
+document.documentElement.lang = chrome.i18n.getUILanguage();
+document.querySelectorAll("[data-i18n]").forEach(el => {
+  el.textContent = t(el.dataset.i18n);
+});
+
 function downloadFile(content, fileName, mimeType) {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
@@ -33,17 +41,17 @@ function getSelectedScopeList() {
 
 // 1. Verileri Çek
 btnFetch.addEventListener("click", async () => {
-  statusDiv.innerText = "Taranıyor...";
+  statusDiv.innerText = t("statusScanning");
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   if (!tab || !tab.url.includes("web.whatsapp.com")) {
-    statusDiv.innerText = "Lütfen WhatsApp Web sekmesini açın.";
+    statusDiv.innerText = t("statusOpenWhatsApp");
     return;
   }
 
   chrome.tabs.sendMessage(tab.id, { action: "EXTRACT_CONTACTS" }, (response) => {
     if (chrome.runtime.lastError || !response || response.error) {
-      statusDiv.innerText = "Hata oluştu. Sayfayı yenileyip tekrar deneyin.";
+      statusDiv.innerText = t("statusError");
       return;
     }
 
@@ -59,7 +67,7 @@ btnFetch.addEventListener("click", async () => {
     countAll.innerText = dataStore.allDiscovered.length;
     countGroups.innerText = dataStore.groups.length;
 
-    statusDiv.innerText = "Veriler hazır. Kapsam seçip indirin.";
+    statusDiv.innerText = t("statusReady");
 
     btnVCF.disabled = false;
     btnCSV.disabled = false;
@@ -73,7 +81,7 @@ btnFetch.addEventListener("click", async () => {
 btnVCF.addEventListener("click", () => {
   const list = getSelectedScopeList();
   if (list.length === 0) {
-    statusDiv.innerText = "Seçilen kapsamda kişi bulunamadı.";
+    statusDiv.innerText = t("statusEmptyScope");
     return;
   }
 
@@ -90,7 +98,7 @@ btnVCF.addEventListener("click", () => {
 btnCSV.addEventListener("click", () => {
   const list = getSelectedScopeList();
   if (list.length === 0) {
-    statusDiv.innerText = "Seçilen kapsamda kişi bulunamadı.";
+    statusDiv.innerText = t("statusEmptyScope");
     return;
   }
 
@@ -108,14 +116,14 @@ btnCSV.addEventListener("click", () => {
 btnGroupMembers.addEventListener("click", () => {
   if (dataStore.groups.length === 0) return;
 
-  let csv = "\uFEFFGrup Adı,Grup ID,Katılımcı İsmi,Telefon\r\n";
+  let csv = `\uFEFF${t("groupCsvHeader")}\r\n`;
   dataStore.groups.forEach(g => {
-    const groupName = `"${g.groupName.replace(/"/g, '""')}"`;
+    const groupName = `"${(g.groupName || t("unnamedGroup")).replace(/"/g, '""')}"`;
     g.participants.forEach(p => {
       const pName = `"${p.name.replace(/"/g, '""')}"`;
       csv += `${groupName},${g.groupId},${pName},${p.phone}\r\n`;
     });
   });
 
-  downloadFile(csv, "wa_grup_katilimcilari.csv", "text/csv;charset=utf-8;");
+  downloadFile(csv, t("groupCsvFileName"), "text/csv;charset=utf-8;");
 });
