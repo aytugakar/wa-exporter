@@ -2,11 +2,11 @@
 
 Extract, filter, and export WhatsApp Web contacts, 1-on-1 chats, and group participants seamlessly.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)](https://github.com/ahalilakar/wa-contact-exporter/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)](https://github.com/ahalilakar/wa-exporter/releases)
 [![Manifest](https://img.shields.io/badge/manifest-v3-green.svg)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Issues](https://img.shields.io/github/issues/ahalilakar/wa-contact-exporter)](https://github.com/ahalilakar/wa-contact-exporter/issues)
-[![Discussions](https://img.shields.io/github/discussions/ahalilakar/wa-contact-exporter)](https://github.com/ahalilakar/wa-contact-exporter/discussions)
+[![Issues](https://img.shields.io/github/issues/ahalilakar/wa-exporter)](https://github.com/ahalilakar/wa-exporter/issues)
+[![Discussions](https://img.shields.io/github/discussions/ahalilakar/wa-exporter)](https://github.com/ahalilakar/wa-exporter/discussions)
 
 [English](#-english) • [Türkçe](#-türkçe)
 
@@ -61,7 +61,7 @@ A lightweight, privacy-focused Chrome Extension (Manifest V3) that extracts your
 
 1. **Clone or Download:**
    ```bash
-   git clone [https://github.com/ahalilakar/wa-contact-exporter.git](https://github.com/ahalilakar/wa-contact-exporter.git)
+   git clone [https://github.com/ahalilakar/wa-exporter.git](https://github.com/ahalilakar/wa-exporter.git)
    ```
 2. **Load into Chrome:**
    - Navigate to `chrome://extensions/` in your browser.
@@ -79,7 +79,7 @@ A lightweight, privacy-focused Chrome Extension (Manifest V3) that extracts your
 ### 📂 File Structure
 
 ```text
-wa-contact-exporter/
+wa-exporter/
 ├── icons/
 │   ├── icon16.png
 │   ├── icon32.png
@@ -95,9 +95,9 @@ wa-contact-exporter/
 
 ### 🤝 Community & Support
 
-- 🐛 **Found a bug?** Open an [Issue](https://github.com/ahalilakar/wa-contact-exporter/issues).
-- 💡 **Feature idea?** Submit a [Feature Request](https://github.com/ahalilakar/wa-contact-exporter/issues/new?template=feature_request.md).
-- 💬 **Questions or discussions?** Join our [Discussions](https://github.com/ahalilakar/wa-contact-exporter/discussions).
+- 🐛 **Found a bug?** Open an [Issue](https://github.com/ahalilakar/wa-exporter/issues).
+- 💡 **Feature idea?** Submit a [Feature Request](https://github.com/ahalilakar/wa-exporter/issues/new?template=feature_request.md).
+- 💬 **Questions or discussions?** Join our [Discussions](https://github.com/ahalilakar/wa-exporter/discussions).
 - 🔀 **Contributions:** Pull Requests are welcome!
 
 ---
@@ -130,7 +130,7 @@ WhatsApp Web üzerinden kişilerinizi, doğrudan mesajlaştığınız sohbetleri
 
 1. **Projeyi İndirin:**
    ```bash
-   git clone [https://github.com/ahalilakar/wa-contact-exporter.git](https://github.com/ahalilakar/wa-contact-exporter.git)
+   git clone [https://github.com/ahalilakar/wa-exporter.git](https://github.com/ahalilakar/wa-exporter.git)
    ```
 2. **Chrome'a Ekleyin:**
    - Tarayıcınızda `chrome://extensions/` adresine gidin.
@@ -147,9 +147,9 @@ WhatsApp Web üzerinden kişilerinizi, doğrudan mesajlaştığınız sohbetleri
 
 ### 💬 Katkı ve İletişim
 
-- 🐛 Bir sorunla mı karşılaştınız? [Hata Bildirin (Issue)](https://github.com/ahalilakar/wa-contact-exporter/issues).
-- 💡 Yeni bir özellik mi öneriyorsunuz? [İstek Açın](https://github.com/ahalilakar/wa-contact-exporter/issues/new).
-- 💬 Toplulukla tartışmak için: [Discussions](https://github.com/ahalilakar/wa-contact-exporter/discussions).
+- 🐛 Bir sorunla mı karşılaştınız? [Hata Bildirin (Issue)](https://github.com/ahalilakar/wa-exporter/issues).
+- 💡 Yeni bir özellik mi öneriyorsunuz? [İstek Açın](https://github.com/ahalilakar/wa-exporter/issues/new).
+- 💬 Toplulukla tartışmak için: [Discussions](https://github.com/ahalilakar/wa-exporter/discussions).
 - 🛠️ Katkıda bulunmak için Pull Request gönderebilirsiniz.
 
 ---
